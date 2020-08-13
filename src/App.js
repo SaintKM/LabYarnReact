@@ -6,7 +6,7 @@ var random = Math.floor(Math.random() * word.length);
 function App() {
  return (
   <div className="App">
-    <h1>Arrange these characters.</h1>
+    <h1>ARRANGE THESE CHARACTER</h1>
     <WordCard value={word[random]}/>
   </div>
  );

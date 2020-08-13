@@ -17,3 +17,17 @@
   background: pink;
  }
  
+ .nextBtn {
+  display: inline-block;
+  text-align: center;
+  width: 6em;
+  font-size: 2em;
+  color: gray;
+  outline-style: solid;
+  margin: 1em;
+  user-select: none;
+}
+
+.activeNextBtn {
+  color: black;
+ }

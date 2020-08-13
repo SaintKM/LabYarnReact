@@ -19,7 +19,7 @@ const prepareStateFromWord = (given_word) => {
 export default function WordCard(props){
     
     const [state, setState] = useState(prepareStateFromWord(props.value))
-    
+
     const activationHandler = (c) => {
         //console.log(`${c} has been activated.`)
         //modify first character
@@ -28,19 +28,25 @@ export default function WordCard(props){
             guess = c
         else
             guess = state.guess + c
-
-        setState({...state, guess: guess})
+        setState({...state, guess: guess, completed: false})
         if(guess.length == state.word.length){
             if(guess == state.word){
                 console.log('yeah!')
-                setState({...state, definition_word: "Congratulations!", score: state.score + 1, completed: true})
+                setState({...state, definition_word: "Congratulations!", guess: guess, score: state.score + 1, completed: true})
             }else{
                 console.log('reset')
-                state.definition_word = "Nice try!"
-                setState({...state, guess: '', attempt: state.attempt + 1})
+                setState({...state, definition_word: "Try Again!", guess: '', attempt: state.attempt + 1, completed: true})
             }
         }
-    }  
+    }
+
+    const nextGame = () => {
+        //console.log(state.guess + " | " + state.word)
+        if(state.guess == state.word){
+            console.log('Next Game!')
+            setState({...state, definition_word: "Let's guess", guess: '-', completed: true})
+        }
+    }
 
     return (
         <div>
@@ -51,10 +57,12 @@ export default function WordCard(props){
             <div>
                 {
                     state.chars.map((c, i) =>
-                        <CharacterCard value={c} key={i} activationHandler={activationHandler} attempt={state.attempt}/>
+                        <CharacterCard value={c} key={i} activationHandler={activationHandler} attempt={state.attempt}
+                        completed={state.completed} score={state.score}/>
                     )
                 }
             </div>
+            <div className="nextBtn" onClick={nextGame}>NEXT</div>
         </div>
     );
 }
