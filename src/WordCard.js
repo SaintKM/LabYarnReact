@@ -12,7 +12,8 @@ const prepareStateFromWord = (given_word) => {
         guess: '-',
         definition_word: "Let's guess",
         score: 0,
-        completed: false
+        completed: false,
+        continue: "disable"
     }
 }
 
@@ -22,13 +23,16 @@ export default function WordCard(props){
 
     const activationHandler = (c) => {
         //console.log(`${c} has been activated.`)
-        //modify first character
+        //modify first character and set first state
         let guess = ''
-        if(state.guess == '-')
+        if(state.guess == '-'){
             guess = c
+            state.continue = "disable"
+            state.completed = false
+        }
         else
             guess = state.guess + c
-        setState({...state, guess: guess, completed: false})
+        setState({...state, guess: guess})
         if(guess.length == state.word.length){
             if(guess == state.word){
                 console.log('yeah!')
@@ -44,7 +48,7 @@ export default function WordCard(props){
         //console.log(state.guess + " | " + state.word)
         if(state.guess == state.word){
             console.log('Next Game!')
-            setState({...state, definition_word: "Let's guess", guess: '-', completed: true})
+            setState({...state, definition_word: "Let's guess", guess: '-', continue: 'enable'})
         }
     }
 
@@ -58,7 +62,7 @@ export default function WordCard(props){
                 {
                     state.chars.map((c, i) =>
                         <CharacterCard value={c} key={i} activationHandler={activationHandler} attempt={state.attempt}
-                        completed={state.completed} score={state.score}/>
+                        completed={state.completed} score={state.score} continue={state.continue}/>
                     )
                 }
             </div>

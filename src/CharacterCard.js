@@ -4,6 +4,7 @@ export default function CharacterCard(props) {
     const attemptRef = useRef(props.attempt);
     const scoreRef = useRef(props.score);
     const completeRef = useRef(props.completed);
+    const continueRef = useRef(props.continue);
     const activate = () => {
         if(!active){
             setActive(true)
@@ -16,13 +17,9 @@ export default function CharacterCard(props) {
             setActive(false)
             attemptRef.current = props.attempt
         }
-        /*if(scoreRef.current != props.score){
+        //console.log(continueRef.current + " : " + props.continue + " | " + completeRef.current + " : " + props.completed)
+        if(props.continue == "enable" && props.completed == true){
             setActive(false)
-            scoreRef.current = props.score
-        }*/
-        if(completeRef.current != props.completed){
-            setActive(false)
-            completeRef.current = props.completed
         }
     })
 
