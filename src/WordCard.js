@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import CharacterCard from './CharacterCard.js';
 import _ from 'lodash';
- 
+
+
+const word = ["hello", "equivalent", "balanced", "peace", "graduate", "respect", "optimistic"];
+var random = Math.floor(Math.random() * word.length);
+
 const prepareStateFromWord = (given_word) => {
     let word = given_word.toUpperCase()
     let chars = _.shuffle(Array.from(word))
@@ -19,7 +23,7 @@ const prepareStateFromWord = (given_word) => {
 
 export default function WordCard(props){
     
-    const [state, setState] = useState(prepareStateFromWord(props.value))
+    let [state, setState] = useState(prepareStateFromWord(props.value))
 
     const activationHandler = (c) => {
         //console.log(`${c} has been activated.`)
@@ -49,6 +53,8 @@ export default function WordCard(props){
         if(state.guess == state.word){
             console.log('Next Game!')
             setState({...state, definition_word: "Let's guess", guess: '-', continue: 'enable'})
+            //document.getElementById('CharacterCard-id').remove()
+            //state = prepareStateFromWord(word[random])
         }
     }
 
@@ -58,13 +64,15 @@ export default function WordCard(props){
             <div>Current Word : { state.guess }</div>
             <div>{ state.definition_word }</div>
             <div>Score : { state.score }</div>
-            <div>
+            <div id="cc_p">
+            <div id="CharacterCard-id">
                 {
                     state.chars.map((c, i) =>
                         <CharacterCard value={c} key={i} activationHandler={activationHandler} attempt={state.attempt}
-                        completed={state.completed} score={state.score} continue={state.continue}/>
+                        continue={state.continue} completed={state.completed}/>
                     )
                 }
+            </div>
             </div>
             <div className="nextBtn" onClick={nextGame}>NEXT</div>
         </div>
